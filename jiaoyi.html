@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>交易金额统计</title>
+  <link rel="stylesheet" href="./layui/css/layui.css">
+  <style type="text/css">
+  .det{
+    overflow: hidden;
+    width: 70%;
+    background:#fff;
+    border-radius:6px;
+    border: 1px solid #ccc;
+  }
+  .det li{
+    padding: 6px;
+    display: block;
+    float: left;
+    text-align: center;
+  }
+  .det li span,.det li strong{
+    padding-top: 10px;
+    display: block;
+  }
+  .det li strong{
+    font-size: 20px;
+  }
+  .det li span{
+    font-size: 16px;
+  }
+  .det li:nth-child(1){
+    font-size: 16px;
+    width: 20px;
+
+  }
+  .echarts{
+    height: 200px;
+  }
+  .echartsLine{
+    width: 100%;
+    height: 400px;
+  }
+  .layui-table-page>div{
+    margin-left: 50%;
+    -webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);
+  }
+</style>
+</head>
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">交易金额统计</div>
+      <!-- 头部区域（可配合layui已有的水平导航） -->
+      <ul class="layui-nav layui-layout-left">
+<!--         <li class="layui-nav-item layui-this"><a href="">控制台</a></li>
+        <li class="layui-nav-item"><a href="">商品管理</a></li>
+        <li class="layui-nav-item"><a href="">用户</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">其它系统</a>
+          <dl class="layui-nav-child">
+            <dd><a href="">邮件管理</a></dd>
+            <dd><a href="">消息管理</a></dd>
+            <dd><a href="">授权管理</a></dd>
+          </dl>
+        </li> -->
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+            刘政
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="">基本资料</a></dd>
+            <dd><a href="">安全设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">退出登录</a></li>
+      </ul>
+    </div>
+    
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">数据统计</a>
+          </li>
+          <li class="layui-nav-item"><a href="jigou.html">1机构统计</a></li>
+          <li class="layui-nav-item"><a href="">用户统计</a></li>
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">订单统计</a>
+            <dl class="layui-nav-child">
+              <dd><a href="yuyuetingji.html">2预约订单统计</a></dd>
+              <dd><a href="javascript:;">门诊缴费单统计</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">交易统计</a>
+            <dl class="layui-nav-child">
+              <dd><a href="jiaoyi.html">3交易金额统计</a></dd>
+              <dd><a href="javascript:;">支付方式统计</a></dd>
+            </dl>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <div class="layui-body">
+      <!-- 内容主体区域 -->
+      <div class="layui-container" >
+  
+        <form class="layui-form layui-row" style="padding-top:26px">
+
+          <div class="layui-form-item layui-col-md3">
+            <label class="layui-form-label">机构:</label>
+            <div class="layui-input-block">
+              <select name="city" lay-verify="" lay-search>
+                <option value="010">机构1</option>
+                <option value="021" disabled>机构2（禁用效果）</option>
+                <option value="0571" selected>机构3</option>
+              </select>
+            </div>  
+          </div>
+
+          <div class="layui-col-md8 layui-col-md-offset1">
+           <div class="layui-row">
+            <div class="layui-form-item layui-col-md5">
+              <div class="layui-input-inline">
+                <input type="text"  id="shuangdate" placeholder="选择日期范围" class="layui-input" name="">
+              </div>
+              <div class="layui-form-mid">最近</div>
+            </div>
+
+            <div class="layui-col-md7" style="padding-top: 4px">
+              <button class="layui-btn layui-btn-normal layui-btn-sm">7天</button> 
+              <button class="layui-btn layui-btn-primary layui-btn-sm">30天</button> 
+              <button class="layui-btn layui-btn-primary layui-btn-sm">90天</button> 
+              <button class="layui-btn layui-btn-primary layui-btn-sm">12个月</button> 
+              <button class="layui-btn layui-btn-primary layui-btn-sm">上线至今</button> 
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+
+      <hr class="layui-bg-gray">
+
+      <h2>交易概况</h2>
+      <div style="padding:20px 0 30px 0;position:relative">交易总金额:
+        <strong style="font-size:20px;position: absolute;top: -10px;font-size: 24px;left:100px;position: absolute;top: 14px;">151,818</strong>
+      </div>
+
+      <div class="layui-row">
+        <div class="layui-col-md6">
+          <ul class="det">
+            <li>预约挂号</li>
+            <li><span>支付笔数</span><strong>520</strong></li>
+            <li><span>支付金额</span><strong>51,6465</strong></li>
+            <li><span>退费笔数</span><strong>39</strong></li>
+            <li><span>退费金额</span><strong>51,6465</strong></li>
+          </ul>
+        </div>
+        <div class="layui-col-md6">
+         <ul class="det">
+          <li>预约挂号</li>
+          <li><span>支付笔数</span><strong>520</strong></li>
+          <li><span>支付金额</span><strong>51,6465</strong></li>
+          <li><span>退费笔数</span><strong>39</strong></li>
+          <li><span>退费金额</span><strong>51,6465</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="padding: 20px 0 30px 0">交易额占比</h2>
+
+    <div class="layui-row">
+      <div class="layui-col-md4 echarts" id="echarts1" ></div>
+      <div class="layui-col-md4 echarts" id="echarts2" ></div>
+      <div class="layui-col-md4 echarts" id="echarts3" ></div>
+    </div>
+
+<hr class="layui-bg-gray">
+    <h2 style="padding: 20px 0 30px 0">交易趋势</h2>
+  
+  <div class="layui-row">
+<div class="layui-col-md11 layui-tab layui-tab-card">
+  <ul class="layui-tab-title">
+    <li class="layui-this">成交总额</li>
+    <li>预约挂号</li>
+    <li>门诊缴费</li>
+  </ul>
+  <div class="layui-tab-content" >
+    <div class="layui-tab-item layui-show " >
+      <div id="echartsLine1" class="echartsLine"></div>
+    </div>
+    <div class="layui-tab-item"  >
+      <div id="echartsLine2" class="echartsLine"></div>
+    </div>
+    <div class="layui-tab-item" >
+      <div id="echartsLine3" class="echartsLine"></div>
+    </div>
+  </div>
+</div>
+      </div>
+
+    <hr class="layui-bg-gray">
+    <h2 style="padding: 20px 0 10px 0">详细数据</h2>
+    <div class="layui-row">
+      <div class="layui-col-md11">
+      <!--   <table class="layui-table" id="test">
+        </table> -->
+
+
+<table class="layui-table" lay-data='{data:[{
+    "username": "张小三"
+    ,"amount": 18
+    ,"province": "浙江"
+    ,"city": "杭州"
+    ,"zone": "西湖区"
+    ,"street": "西溪街道"
+    ,"address": "西溪花园"
+    ,"house": "30栋1单元"
+  }, {
+    "username": "李小四"
+    ,"amount": 39
+    ,"province": "江苏"
+    ,"city": "苏州"
+    ,"zone": "姑苏区"
+    ,"street": "丝绸路"
+    ,"address": "天墅之城"
+    ,"house": "9幢2单元"
+  }, {
+    "username": "王小五"
+    ,"amount": 8
+    ,"province": "江西"
+    ,"city": "南昌"
+    ,"zone": "青山湖区"
+    ,"street": "艾溪湖办事处"
+    ,"address": "中兴和园"
+    ,"house": "1幢3单元"
+  }, {
+    "username": "赵小六"
+    ,"amount": 16
+    ,"province": "福建"
+    ,"city": "泉州"
+    ,"zone": "丰泽区"
+    ,"street": "南洋街道"
+    ,"address": "南洋村"
+    ,"house": "6幢1单元"
+  }, {
+    "username": "孙小七"
+    ,"amount": 12
+    ,"province": "湖北"
+    ,"city": "武汉"
+    ,"zone": "武昌区"
+    ,"street": "武昌大道"
+    ,"address": "两湖花园"
+    ,"house": "16幢2单元"
+  }, {
+    "username": "周小八"
+    ,"amount": 11
+    ,"province": "安徽"
+    ,"city": "黄山"
+    ,"zone": "黄山区"
+    ,"street": "汤口镇"
+    ,"address": "温泉村"
+    ,"house": "21号"
+  }] ,cellMinWidth: 80, page: true}'>
+  <thead>
+    <tr>
+      <th lay-data="{field:'username', width:80 ,sort: true}" rowspan="3">联系人</th>
+      <th lay-data="{field:'amount', width:120}" rowspan="3">金额</th>
+      <th lay-data="{align:'center'}" colspan="5">地址1</th>
+      <th lay-data="{align:'center'}" colspan="2">地址2</th>
+      <th lay-data="{fixed: 'right', width: 160, align: 'center', toolbar: '#barDemo'}" rowspan="3">操作</th>
+    </tr>
+    <tr>
+      <th lay-data="{field:'province'}" rowspan="2">省</th>
+      <th lay-data="{field:'city'}" rowspan="2">市</th>
+      <th lay-data="{align:'center'}" colspan="3">详细</th>
+      <th lay-data="{field:'province'}" rowspan="2">省</th>
+      <th lay-data="{field:'city'}" rowspan="2">市</th>
+    </tr>
+    <tr>
+      <th lay-data="{field:'street',sort: true}" rowspan="2">街道</th>
+      <th lay-data="{field:'address'}">小区</th>
+      <th lay-data="{field:'house'}">单元</th>
+    </tr>
+  </thead>
+</table>
+
+
+
+      </div>
+    </div>
+
+
+      
+  </div>
+  
+</div>
+
+<div class="layui-footer">
+  <!-- 底部固定区域 -->
+  © 健康深圳交易金额统计
+</div>
+</div>
+<script src="./layui/layui.js"></script>
+<script type="text/javascript" src="echarts.min.js"></script>
+<script>
+  var echarts1=document.getElementById('echarts1'),
+  echarts2=document.getElementById('echarts2'),
+  echarts3=document.getElementById('echarts3'),
+  echartsLine1=document.getElementById('echartsLine1'),
+  echartsLine2=document.getElementById('echartsLine2'),
+  echartsLine3=document.getElementById('echartsLine3');
+
+
+  var option1 = {
+   title:{
+     text:'总交易额',
+     left:'center'
+   },
+   tooltip: {
+    trigger: 'item',
+    formatter: "{a} <br/>{b}: {c} ({d}%)"
+  },
+  legend: {
+    bottom:"0",
+    icon:'circle',
+    show:true,
+    data:['预约挂号','门诊缴费']
+  },
+  series: [
+
+  {
+    name:'总交易额',
+    type:'pie',
+    radius: ['50%', '70%'],
+    avoidLabelOverlap: false,
+    label: {
+      normal: {
+        show: false,
+        position: 'center'
+      },
+      emphasis: {
+        show: true,
+        textStyle: {
+          fontSize: '18',
+          fontWeight: 'bold'
+        }
+      }
+    },
+    labelLine: {
+      normal: {
+        show: false
+      }
+    },
+    data:[
+    {value:335, name:'预约挂号'},
+    {value:310, name:'门诊缴费'},
+    ]
+  }
+  ]
+};
+
+
+
+var option2= {
+    title: {
+        text: '成交总额',
+        subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    legend: {
+        data:['支付金额','支付笔数'],
+        x:'left'
+    },
+    // toolbox: {
+    //     show: true,
+    //     feature: {
+    //         dataZoom: {
+    //             yAxisIndex: 'none'
+    //         },
+    //         dataView: {readOnly: false},
+    //         magicType: {type: ['line', 'bar']},
+    //         restore: {},
+    //         saveAsImage: {}
+    //     }
+    // },
+    xAxis:  {
+        // name:"单位日",
+        type: 'category',
+        boundaryGap: false,
+        data: ['2018-04-03','2018-04-04','2018-04-05','2018-04-06','2018-04-07','2018-04-08','2018-04-09']
+    },
+    yAxis: [{
+        name:"支付金额",
+        type: 'value',
+        axisLabel: {
+            formatter: function(v){ 
+              return v+'¥';
+            }
+          }
+        },
+        {
+            type: 'value',
+            name: '支付笔数',
+            position: 'right',
+            axisLabel: {
+                formatter: '{value} 笔'
+            }
+        }],
+    //     dataZoom: [
+    //     {
+    //         type: 'slider',
+    //         xAxisIndex: 0,
+    //         filterMode: 'empty'
+    //     },
+    //     {
+    //         type: 'slider',
+    //         yAxisIndex: [0,1],//控制第一个Y轴 第二个Y轴
+    //         filterMode: 'empty'
+    //     },
+    //     {
+    //         type: 'inside',
+    //         xAxisIndex: 0,
+    //         filterMode: 'empty'
+    //     },
+    //     {
+    //         type: 'inside',
+    //         yAxisIndex: [0,1],//控制第一个Y轴 第二个Y轴
+    //         filterMode: 'empty'
+    //     }
+    // ],
+    series: [
+        {
+            name:'支付金额',
+            type:'line',
+            data:[11, 11, 15, 13, 12, 13, 10 ,20],
+            // markPoint: {
+            //     data: [
+            //         {type: 'max', name: '最大值'},
+            //         {type: 'min', name: '最小值'}
+            //     ]
+            // },
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'支付笔数',
+            type:'line',
+            yAxisIndex: 1,
+            data:[1, 2, 2, 5, 3, 2, 0 ,9],
+            markPoint: {
+                data: [
+                    {name: '最低', value: -2, xAxis: 1, yAxis: -1.5}
+                ]
+            },
+            // markLine: {
+            //     data: [
+            //         {type: 'average', name: '平均值'},
+            //         [{
+            //             symbol: 'none',
+            //             x: '90%',
+            //             yAxis: 'max'
+            //         }, {
+            //             symbol: 'circle',
+            //             label: {
+            //                 normal: {
+            //                     position: 'start',
+            //                     formatter: '最大值'
+            //                 }
+            //             },
+            //             type: 'max',
+            //             name: '最高点'
+            //         }]
+            //     ]
+            // }
+        }
+    ]
+};
+
+
+
+var tData={"code":0,"msg":"","count":1000,"data":[{"id":10010,"username":"user-10","sex":"女","city":"城市-10","sign":"签名-10","experience":1016,"logins":182,"wealth":71294671,"classify":"诗人","score":34},{"id":10011,"username":"user-11","sex":"女","city":"城市-11","sign":"签名-11","experience":492,"logins":107,"wealth":8062783,"classify":"诗人","score":6},{"id":10012,"username":"user-12","sex":"女","city":"城市-12","sign":"签名-12","experience":106,"logins":176,"wealth":42622704,"classify":"词人","score":54},{"id":10013,"username":"user-13","sex":"男","city":"城市-13","sign":"签名-13","experience":1047,"logins":94,"wealth":59508583,"classify":"诗人","score":63},{"id":10014,"username":"user-14","sex":"男","city":"城市-14","sign":"签名-14","experience":873,"logins":116,"wealth":72549912,"classify":"词人","score":8},{"id":10015,"username":"user-15","sex":"女","city":"城市-15","sign":"签名-15","experience":1068,"logins":27,"wealth":52737025,"classify":"作家","score":28},{"id":10016,"username":"user-16","sex":"女","city":"城市-16","sign":"签名-16","experience":862,"logins":168,"wealth":37069775,"classify":"酱油","score":86},{"id":10017,"username":"user-17","sex":"女","city":"城市-17","sign":"签名-17","experience":1060,"logins":187,"wealth":66099525,"classify":"作家","score":69},{"id":10018,"username":"user-18","sex":"女","city":"城市-18","sign":"签名-18","experience":866,"logins":88,"wealth":81722326,"classify":"词人","score":74},{"id":10019,"username":"user-19","sex":"女","city":"城市-19","sign":"签名-19","experience":682,"logins":106,"wealth":68647362,"classify":"词人","score":51}]}
+
+
+
+//JavaScript代码区域
+layui.use(['element','form','table','laydate'], function(){
+  var $=layui.$;
+  var element = layui.element;
+  var form = layui.form;
+  var table = layui.table;
+  var laydate=layui.laydate;
+
+  //日期范围选择
+  laydate.render({
+    elem: '#shuangdate'
+    // ,type: 'datetime'
+    ,theme: 'grid'
+    ,range: "~"
+    ,calendar: true
+    ,min: -7 //7天前
+  	,max: 20 //7天后
+  }); 
+
+
+  table.render({
+    elem:"#test",
+    height: 'full',
+    //url: 'https://www.layui.com/demo/table/user/?page=1&limit=10', //数据接口
+    page: true, //开启分页
+    // toolbar: 'default' ,
+    totalRow: 'true',
+    size: 'sm',
+    data:tData.data,
+    cols:[
+      [{field: 'id', title: 'ID', sort: true, fixed: 'left'}
+      ,{field: 'username', title: '用户名', }
+      ,{field: 'sex', title: '性别',  sort: true}
+      ,{field: 'city', title: '城市' } 
+      ,{field: 'sign', title: '签名'}
+      ,{field: 'experience', title: '积分', sort: true}
+      ,{field: 'score', title: '评分', sort: true}
+      ,{field: 'classify', title: '职业'}
+      ,{field: 'wealth', title: '财富', sort: true}
+      ],
+    ]
+  });
+
+
+
+
+  var myecharts1=echartsInit(echarts1,option1),
+  myecharts2=echartsInit(echarts2,option1),
+  myecharts3=echartsInit(echarts3,option1);
+
+  var width = $(".layui-tab-content").width();
+  echartsLine1.style.width=width+'px';
+  echartsLine2.style.width=width+'px';
+  echartsLine3.style.width=width+'px';
+  var myechartsLine1=echartsInit(echartsLine1,option2);
+  var myechartsLine2=echartsInit(echartsLine2,option2);
+  var myechartsLine3=echartsInit(echartsLine3,option2);
+
+    window.onresize=function(){
+      var width = $(".layui-tab-content").width();
+      echartsLine1.style.width=width+'px';
+      echartsLine2.style.width=width+'px';
+      echartsLine3.style.width=width+'px';
+      myecharts1.resize();
+      myecharts2.resize();
+      myecharts3.resize();
+      myechartsLine1.resize();
+      myechartsLine2.resize();
+      myechartsLine3.resize();
+    }
+
+
+
+
+
+});
+
+
+function echartsInit(el,ops){
+  var e=echarts.init(el);
+  e.setOption(ops);
+  return e;
+}
+
+
+
+</script>
+</body>
+</html>

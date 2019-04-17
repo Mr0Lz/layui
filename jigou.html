@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>机构统计</title>
+  <link rel="stylesheet" href="./layui/css/layui.css">
+  <style type="text/css">
+  .layui-card-bottom{
+    text-align: center;
+    border-bottom: 0;border-top: 1px solid #f6f6f6;
+  }
+  .layui-card{
+    text-align: center;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.12);
+            box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    border:1px solid #e6e6e6 
+  }
+  .layui-card-body strong{
+    margin-top: 10px;
+    font-size: 30px;
+  }
+
+  .layui-card-body p{  
+    margin-bottom: 10px;
+    word-break: keep-all;
+  }
+  .card-item strong em{
+        font-size: 10px;
+    font-style: normal;
+    -webkit-transform: translate(-8px,6px);
+        -ms-transform: translate(-8px,6px);
+            transform: translate(-8px,6px);
+    display: inline-block;
+  }
+</style>
+</head>
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">交易金额统计</div>
+      <!-- 头部区域（可配合layui已有的水平导航） -->
+      <ul class="layui-nav layui-layout-left">
+<!--         <li class="layui-nav-item layui-this"><a href="">控制台</a></li>
+        <li class="layui-nav-item"><a href="">商品管理</a></li>
+        <li class="layui-nav-item"><a href="">用户</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">其它系统</a>
+          <dl class="layui-nav-child">
+            <dd><a href="">邮件管理</a></dd>
+            <dd><a href="">消息管理</a></dd>
+            <dd><a href="">授权管理</a></dd>
+          </dl>
+        </li> -->
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+            刘政
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="">基本资料</a></dd>
+            <dd><a href="">安全设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">退出登录</a></li>
+      </ul>
+    </div>
+    
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="###">数据统计</a>
+          </li>
+          <li class="layui-nav-item"><a href="jigou.html">1机构统计</a></li>
+          <li class="layui-nav-item"><a href="">用户统计</a></li>
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">订单统计</a>
+            <dl class="layui-nav-child">
+              <dd><a href="yuyuetingji.html">2预约订单统计</a></dd>
+              <dd><a href="javascript:;">门诊缴费单统计</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">交易统计</a>
+            <dl class="layui-nav-child">
+              <dd><a href="jiaoyi.html">3交易金额统计</a></dd>
+              <dd><a href="javascript:;">支付方式统计</a></dd>
+            </dl>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <div class="layui-body">
+      <!-- 内容主体区域 -->
+      <div class="layui-container" >
+  
+
+
+ <div class="layui-row layui-col-space12" style="padding-top: 20px">
+
+<div class="layui-col-md2">
+<div class="layui-card">
+  <div class="layui-card-body">
+    <p>服务机构总数</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom" >31,420人</div>
+</div>
+</div>
+<div class="layui-col-md2">
+<div class="layui-card"">
+  <div class="layui-card-body">
+    <p>机构服务</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom">31,420人</div>
+</div>
+</div>
+<div class="layui-col-md2">
+<div class="layui-card"">
+  <div class="layui-card-body">
+    <p>机构服务</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom">31,420人</div>
+</div>
+</div>
+<div class="layui-col-md2">
+<div class="layui-card"">
+  <div class="layui-card-body">
+    <p>机构服务</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom">31,420人</div>
+</div>
+</div>
+<div class="layui-col-md2">
+<div class="layui-card"">
+  <div class="layui-card-body">
+    <p>机构服务</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom" >31,420人</div>
+</div>
+</div>
+<div class="layui-col-md2">
+<div class="layui-card">
+  <div class="layui-card-body">
+    <p>机构服务</p>
+    <strong>301</strong>
+  </div>
+  <div class="layui-card-header layui-card-bottom" >31,420人</div>
+</div>
+</div>
+
+
+
+</div>
+
+
+    <h2 style="padding: 30px 0">机构开通服务概况</h2>
+
+    <div class="layui-row">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header" >就医系统：104家</div>
+          <div class="layui-card-body">
+            <div class="layui-row">
+            <div class="card-item layui-col-md2">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md2">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md2">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md2">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md2">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+          </div>
+          </div>
+          <div class="layui-card-header layui-card-bottom" >医保:10，当天:20 医保缴费:10</div>
+        </div>
+      </div>
+    </div>
+
+<div class="layui-row layui-col-space30" style="margin-top: 30px">
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <div class="layui-card-header" >就医系统：104家</div>
+          <div class="layui-card-body">
+            <div class="layui-row">
+            <div class="card-item layui-col-md6">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md6">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+          </div>
+          </div>
+          <div class="layui-card-header layui-card-bottom" >医保:10，当天:20 医保缴费:10</div>
+        </div>
+      </div>
+
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <div class="layui-card-header" >就医系统：104家</div>
+          <div class="layui-card-body">
+            <div class="layui-row">
+            <div class="card-item layui-col-md6">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+            <div class="card-item layui-col-md6">
+              <p>机构服务</p>
+              <strong>301 <em>家</em></strong>
+            </div>
+          </div>
+          </div>
+          <div class="layui-card-header layui-card-bottom" >医保:10，当天:20 医保缴费:10</div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+      <!-- layui-container end -->
+       </div>
+  
+    </div>
+
+<div class="layui-footer">
+  <!-- 底部固定区域 -->
+  © 健康深圳交易金额统计
+</div>
+</div>
+<script src="./layui/layui.js"></script>
+<script>
+ 
+//JavaScript代码区域
+layui.use(['element','form','table','laydate'], function(){
+  var $=layui.$;
+  var element = layui.element;
+
+
+
+
+});
+
+
+function echartsInit(el,ops){
+  var e=echarts.init(el);
+  e.setOption(ops);
+  return e;
+}
+
+
+
+</script>
+</body>
+</html>
